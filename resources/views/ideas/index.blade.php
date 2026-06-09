@@ -20,11 +20,21 @@
     <h1 class="text-2xl font-bold text-white">
         Your Ideas
     </h1>
-    <ul class="mt-4 space-y-2">
+    <div class="mt-4 space-y-3">
        @foreach ($ideas as $idea)
-        <li class="text-sm text-gray-300">{{$idea->description}}</li>
+        <div class="flex items-center justify-between bg-gray-800 p-3 rounded-md">
+          <span class="text-sm text-gray-300">{{$idea->description}}</span>
+          <div class="flex gap-2">
+            <a href="/ideas/{{ $idea->id }}/edit" class="text-xs bg-blue-600 hover:bg-blue-500 px-2 py-1 rounded text-white">Edit</a>
+            <form method="POST" action="/ideas/{{ $idea->id }}" style="display:inline;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="text-xs bg-red-600 hover:bg-red-500 px-2 py-1 rounded text-white">Delete</button>
+            </form>
+          </div>
+        </div>
        @endforeach
-     </ul>
+    </div>
   </div> 
 @endif
 </x-layout>

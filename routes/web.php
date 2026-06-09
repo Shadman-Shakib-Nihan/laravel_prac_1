@@ -93,3 +93,12 @@ Route::get('/delete-idea', function () {
 
     return redirect('/ideas');
 });
+/*
+|--------------------------------------------------------------------------
+| Delete single idea  
+|--------------------------------------------------------------------------
+*/
+Route::delete('/ideas/{idea}', function (Idea $idea) {
+    $idea->delete();
+    return redirect('/ideas');
+});
