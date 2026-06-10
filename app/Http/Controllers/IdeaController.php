@@ -30,12 +30,15 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        $idea = request('description');
+        $request->validate([
+            'description'=>['required', 'min:10','max:255'],
+        ]);
 
     Idea::create([
-        'description' => $idea, 
+        'description' => request('description'), 
         'state' => 'pending',
     ]);
 
