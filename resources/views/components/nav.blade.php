@@ -27,15 +27,18 @@
       <li><a href="/ideas/create">Create Idea</a></li>
     </ul>
   </div>
-  <div class="navbar-end">
+  <div class="navbar-end space-x-1.5">
 
   @guest
+    <a class="btn" href="/login">Login</a>
+
     <a class="btn" href="/register">Register</a>
   @endguest
   
   @auth
     <form method="POST" action="/logout">
       @csrf
+      @method('DELETE')
       <button type="submit" class="btn btn-ghost" >Logout</button>
     </form>
   @endauth

@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Auth\RegisterUserController;
+use App\Http\Controllers\Auth\SessionController;
 Use App\Http\Controllers\IdeaController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Idea;
@@ -77,3 +78,8 @@ Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy']);
 
 Route::get('/register',[RegisterUserController::class, 'create']);
 Route::post('/register',[RegisterUserController::class, 'store']);
+
+Route::get('/login',[SessionController::class,'create']);
+Route::post('/login',[SessionController::class,'store']);
+
+Route::delete('/logout',[SessionController::class,'destroy']);
