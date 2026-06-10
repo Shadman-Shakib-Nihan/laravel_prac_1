@@ -23,7 +23,7 @@
     <div class="card-body flex flex-col h-full">
         
         <div class="overflow-y-auto flex-1">
-            <p class="text-sm break-words">
+            <p class="text-sm wrap-break-word">
                 {{ $idea->description }}
             </p>
         </div>

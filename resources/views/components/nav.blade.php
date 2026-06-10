@@ -28,6 +28,17 @@
     </ul>
   </div>
   <div class="navbar-end">
-    <a class="btn">Button</a>
+
+  @guest
+    <a class="btn" href="/register">Register</a>
+  @endguest
+  
+  @auth
+    <form method="POST" action="/logout">
+      @csrf
+      <button type="submit" class="btn btn-ghost" >Logout</button>
+    </form>
+  @endauth
+   
   </div>
 </div>   
