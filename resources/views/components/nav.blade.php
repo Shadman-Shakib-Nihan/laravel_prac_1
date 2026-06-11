@@ -1,47 +1,58 @@
 <div class="navbar bg-gray-900 text-white shadow-sm">
   <div class="navbar-start">
+    
+    <!-- Mobile Dropdown -->
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h8m-8 6h16" />
+        </svg>
       </div>
-      <ul
-        tabindex="-1"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a>Home</a></li>
-        <li>
-          <a>Parent</a>
-          <ul class="p-2">
-            <li><a>Home</a></li>
-            <li><a>View Ideas</a></li>
-          </ul>
-        </li>
-        <li><a>View Ideas</a></li>
+
+      <ul tabindex="0"
+        class="menu menu-sm dropdown-content bg-base-100 text-white rounded-box z-10 mt-3 w-52 p-2 shadow">
+
+        <li><a href="/ideas">Home</a></li>
+        <li><a href="/ideas/create">Create Idea</a></li>
+
+        @can("view-admin")
+           <li><a href="/admin">Admin</a></li>
+        @endcan
+
       </ul>
     </div>
+
     <a class="btn btn-ghost text-xl">Idea</a>
   </div>
+
+  <!-- Desktop Menu -->
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
       <li><a href="/ideas">Home</a></li>
-      
       <li><a href="/ideas/create">Create Idea</a></li>
+      
+      @can("view-admin")
+           <li><a href="/admin">Admin</a></li>
+      @endcan
     </ul>
   </div>
+
+  <!-- Auth Section -->
   <div class="navbar-end space-x-1.5">
+    
+    @guest
+      <a class="btn" href="/login">Login</a>
+      <a class="btn" href="/register">Register</a>
+    @endguest
 
-  @guest
-    <a class="btn" href="/login">Login</a>
+    @auth
+      <form method="POST" action="/logout">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-ghost">Logout</button>
+      </form>
+    @endauth
 
-    <a class="btn" href="/register">Register</a>
-  @endguest
-  
-  @auth
-    <form method="POST" action="/logout">
-      @csrf
-      @method('DELETE')
-      <button type="submit" class="btn btn-ghost" >Logout</button>
-    </form>
-  @endauth
-   
   </div>
-</div>   
+</div>

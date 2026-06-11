@@ -6,19 +6,27 @@ use App\Models\Idea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class IdeaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $ideas = Idea::all();
+   
 
-        return view('ideas.index', [
-            'ideas' => $ideas,
-        ]);
-    }
+    public function index()
+{
+    $ideas = Idea::where('user_id', Auth::id())->get();
+
+    return view('ideas.index', compact('ideas'));
+}
+
+
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.

@@ -5,6 +5,9 @@ use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\IdeaController;
 use App\Models\Idea;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Gate;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -61,3 +64,7 @@ Route::get('/ideas/{idea}', [IdeaController::class, 'show']);
 |--------------------------------------------------------------------------
 */
 Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy']);
+
+Route::get('/admin', function () {
+    return "this is admin";
+});
