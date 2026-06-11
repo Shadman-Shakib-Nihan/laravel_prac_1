@@ -67,4 +67,4 @@ Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy']);
 
 Route::get('/admin', function () {
     return "this is admin";
-});
+})->can('view-admin');
