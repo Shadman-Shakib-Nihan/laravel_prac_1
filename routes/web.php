@@ -1,9 +1,10 @@
 <?php
+
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Auth\SessionController;
-Use App\Http\Controllers\IdeaController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IdeaController;
 use App\Models\Idea;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,32 +15,22 @@ Route::get('/', function () {
     return redirect('/ideas');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Index
-|--------------------------------------------------------------------------
-*/
-Route::get('/ideas', [IdeaController::class, 'index']);
+Route::middleware('auth')->group(function () {
 
-/*
-|--------------------------------------------------------------------------
-| create idea
-|--------------------------------------------------------------------------
-*/
+    Route::get('/ideas', [IdeaController::class, 'index']);
+    Route::get('/ideas/create', [IdeaController::class, 'create']);
+    Route::post('/ideas', [IdeaController::class, 'store']);
+    Route::delete('/logout', [SessionController::class, 'destroy'])->name('logout');
+});
 
-Route::get('/ideas/create', [IdeaController::class, 'create']);
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [RegisterUserController::class, 'create'])->name('register');
+    Route::post('/register', [RegisterUserController::class, 'store']);
 
+    Route::get('/login', [SessionController::class, 'create'])->name('login');
+    Route::post('/login', [SessionController::class, 'store']);
 
-/*
-|--------------------------------------------------------------------------
-| store idea
-|--------------------------------------------------------------------------
-*/
-Route::post('/ideas', [IdeaController::class, 'store']);    
-
-    
-
-
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +40,6 @@ Route::post('/ideas', [IdeaController::class, 'store']);
 
 Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit']);
 
-
 /*
 |--------------------------------------------------------------------------
 | Update idea
@@ -58,7 +48,6 @@ Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit']);
 
 Route::patch('/ideas/{idea}', [IdeaController::class, 'update']);
 
-
 /*
 |--------------------------------------------------------------------------
 | Show single idea
@@ -66,20 +55,9 @@ Route::patch('/ideas/{idea}', [IdeaController::class, 'update']);
 */
 Route::get('/ideas/{idea}', [IdeaController::class, 'show']);
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Delete all ideas
 |--------------------------------------------------------------------------
 */
 Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy']);
-
-
-Route::get('/register',[RegisterUserController::class, 'create']);
-Route::post('/register',[RegisterUserController::class, 'store']);
-
-Route::get('/login',[SessionController::class,'create']);
-Route::post('/login',[SessionController::class,'store']);
-
-Route::delete('/logout',[SessionController::class,'destroy']);

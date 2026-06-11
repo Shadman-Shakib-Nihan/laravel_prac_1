@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Idea;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IdeaController extends Controller
 {
@@ -14,9 +15,9 @@ class IdeaController extends Controller
     {
         $ideas = Idea::all();
 
-    return view('ideas.index', [
-        'ideas' => $ideas,
-    ]);
+        return view('ideas.index', [
+            'ideas' => $ideas,
+        ]);
     }
 
     /**
@@ -30,19 +31,19 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-
     public function store(Request $request)
     {
         $request->validate([
-            'description'=>['required', 'min:10','max:255'],
+            'description' => ['required', 'min:10', 'max:255'],
         ]);
 
-    Idea::create([
-        'description' => request('description'), 
-        'state' => 'pending',
-    ]);
+        Idea::create([
+            'description' => request('description'),
+            'state' => 'pending',
+            'user_id' => Auth::user()->id,
+        ]);
 
-    return redirect('/ideas');
+        return redirect('/ideas');
     }
 
     /**
@@ -51,8 +52,8 @@ class IdeaController extends Controller
     public function show(Idea $idea)
     {
         return view('ideas.show', [
-        'idea' => $idea,
-    ]);
+            'idea' => $idea,
+        ]);
     }
 
     /**
@@ -61,8 +62,8 @@ class IdeaController extends Controller
     public function edit(Idea $idea)
     {
         return view('ideas.edit', [
-        'idea' => $idea,
-    ]);
+            'idea' => $idea,
+        ]);
     }
 
     /**
@@ -71,10 +72,10 @@ class IdeaController extends Controller
     public function update(Request $request, Idea $idea)
     {
         $idea->update([
-        'description' => request('description'),          
-    ]);
+            'description' => request('description'),
+        ]);
 
-    return redirect('/ideas');
+        return redirect('/ideas');
     }
 
     /**
@@ -82,10 +83,9 @@ class IdeaController extends Controller
      */
     public function destroy(Idea $idea)
     {
-        
-   $idea->delete();
 
+        $idea->delete();
 
-    return redirect('/ideas');
+        return redirect('/ideas');
     }
 }
