@@ -34,6 +34,7 @@
       
       @can("view-admin")
            <li><a href="/admin">Admin</a></li>
+           <
       @endcan
     </ul>
   </div>
