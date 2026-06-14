@@ -12,7 +12,7 @@ class IdeaController extends Controller
     /**
      * Display a listing of the resource.
      */
-   
+
 
     public function index()
 {
@@ -45,7 +45,7 @@ class IdeaController extends Controller
             'description' => ['required', 'min:10', 'max:255'],
         ]);
 
-        Idea::create([
+        $idea =Idea::create([
             'description' => request('description'),
             'state' => 'pending',
             'user_id' => Auth::user()->id,
